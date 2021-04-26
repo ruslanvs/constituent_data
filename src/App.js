@@ -1,4 +1,6 @@
+import React, { useState } from 'react'
 import './App.css';
+import { CSVLoader } from './CSVLoader'
 
 const columns = ['email', 'firstName', 'lastName', 'zipCode'];
 const columnHeaders = {
@@ -8,24 +10,35 @@ const columnHeaders = {
   zipCode: 'Zip Code',
 }
 
-const constituents = [
-  {
-    email: 'bill.black@email.com',
-    firstName: 'Bill',
-    lastName: 'Black',
-    zipCode: '12345',
-  },
-  {
-    email: 'anny.smith@email.com',
-    firstName: 'Anny',
-    lastName: 'Smith',
-    zipCode: '12345',
-  },
-]
-
 function App() {
+  const [constituentsRaw, setConstituentsRaw] = useState([]);
+  const [csvImportError, setCsvImportError] = useState(null);
+
+  const constituents = [];
+  // Omitting the 0th member with header row
+  for (let i = 1; i < constituentsRaw.length; i++) {
+    // Converting array of arrays with records into an array of objects since data consumed from
+    // a DB would likely come as an array of objects
+    const constituentData = constituentsRaw[i].data;
+    constituents.push({
+      email: constituentData[0],
+      firstName: constituentData[1],
+      lastName: constituentData[2],
+      zipCode: constituentData[3],
+    })
+  };
+
   return (
     <>
+      <CSVLoader
+        setData={setConstituentsRaw}
+        setError={setCsvImportError}
+      />
+      {/* TODO: test error handing functionality */}
+      {csvImportError &&
+        (<div>
+          {csvImportError.err} {csvImportError.reason}
+        </div>)}
       <h1>Constituents</h1>
       <table>
         <thead>
