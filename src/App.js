@@ -30,15 +30,11 @@ function App() {
       <table>
         <thead>
           <tr>
-            {columns.map((column) => {
-              return <th key={column}>{columnHeaders[column]}</th>;
-            })}
+            {columns.map((column) => <th key={column}>{columnHeaders[column]}</th>)}
           </tr>
         </thead>
         <tbody>
-          {constituents.map((constituent) => {
-            return ConstituentRow(constituent);
-          })}
+          {constituents.map((constituent) => ConstituentRow(constituent))}
         </tbody>
       </table>
     </>
