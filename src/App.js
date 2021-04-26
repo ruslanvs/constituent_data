@@ -1,24 +1,66 @@
-import logo from './logo.svg';
 import './App.css';
+
+const columns = ['email', 'firstName', 'lastName', 'zipCode'];
+const columnHeaders = {
+  email: 'Email',
+  firstName: 'Fist Name',
+  lastName: 'Last Name',
+  zipCode: 'Zip Code',
+}
+
+const constituents = [
+  {
+    email: 'bill.black@email.com',
+    firstName: 'Bill',
+    lastName: 'Black',
+    zipCode: '12345',
+  },
+  {
+    email: 'anny.smith@email.com',
+    firstName: 'Anny',
+    lastName: 'Smith',
+    zipCode: '12345',
+  },
+]
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>Constituents</h1>
+      <table>
+        <thead>
+          <tr>
+            {columns.map((column) => {
+              return <th key={column}>{columnHeaders[column]}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {constituents.map((constituent) => {
+            return ConstituentRow(constituent);
+          })}
+        </tbody>
+      </table>
+    </>
+  );
+}
+
+function ConstituentRow({ email, firstName, lastName, zipCode }) {
+  return (
+    <tr key={email + firstName + lastName + zipCode}>
+      <td>
+        {email}
+      </td>
+      <td>
+        {firstName}
+      </td>
+      <td>
+        {lastName}
+      </td>
+      <td>
+        {zipCode}
+      </td>
+    </tr>
   );
 }
 
